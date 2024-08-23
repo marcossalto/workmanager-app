@@ -1,4 +1,4 @@
-package com.marcossalto.workmanagerapp
+package com.marcossalto.workmanagerapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
