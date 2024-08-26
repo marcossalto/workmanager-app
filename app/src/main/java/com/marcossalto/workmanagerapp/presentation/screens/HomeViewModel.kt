@@ -1,6 +1,7 @@
 package com.marcossalto.workmanagerapp.presentation.screens
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -8,8 +9,10 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.marcossalto.workmanagerapp.core.BackupWorker
 import com.marcossalto.workmanagerapp.core.SyncWorker
+import com.marcossalto.workmanagerapp.core.UploadWorker
 import com.marcossalto.workmanagerapp.core.WorkerEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.TimeUnit
@@ -31,6 +34,9 @@ class HomeViewModel @Inject constructor(private val application: Application) : 
             }
             is WorkerEvent.Backup -> {
                 scheduleBackup()
+            }
+            is WorkerEvent.UploadImage -> {
+                uploadImage(event.uri)
             }
         }
     }
@@ -71,5 +77,22 @@ class HomeViewModel @Inject constructor(private val application: Application) : 
 
         // Queue the request with WorkManager
         WorkManager.getInstance(application).enqueue(backupRequest)
+    }
+
+    private fun uploadImage(uri: Uri) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        // Create a one-time job request for upload image
+        val uploadRequest = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setConstraints(constraints)
+            .setInputData(
+                workDataOf("URI" to uri.toString())
+            )
+            .build()
+
+        // Queue the request with WorkManager
+        WorkManager.getInstance(application).enqueue(uploadRequest)
     }
 }

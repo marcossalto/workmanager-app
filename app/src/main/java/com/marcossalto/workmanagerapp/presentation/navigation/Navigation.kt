@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.marcossalto.workmanagerapp.presentation.screens.HomeScreen
 import com.marcossalto.workmanagerapp.presentation.screens.Screen
+import com.marcossalto.workmanagerapp.presentation.screens.UploadScreen
 
 @Composable
 fun Navigation() {
@@ -13,12 +14,17 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Upload.route
     ) {
         composable(
             route = Screen.Home.route
         ) {
             HomeScreen()
+        }
+        composable(
+            route = Screen.Upload.route
+        ) {
+            UploadScreen()
         }
     }
 }
