@@ -5,7 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.marcossalto.workmanagerapp.core.SyncWorkerEvent
+import com.marcossalto.workmanagerapp.core.WorkerEvent
 import com.marcossalto.workmanagerapp.presentation.components.HomeContent
 import com.marcossalto.workmanagerapp.presentation.components.HomeTopBar
 
@@ -21,7 +21,8 @@ fun HomeScreen(
             HomeContent(
                 modifier = Modifier
                     .padding(innerPadding),
-                onStartSync = { viewModel.onEvent(SyncWorkerEvent.StartPeriodicSync) }
+                onStartSync = { viewModel.onEvent(WorkerEvent.StartPeriodicSync) },
+                onBackup = { viewModel.onEvent(WorkerEvent.Backup) }
             )
         }
     )

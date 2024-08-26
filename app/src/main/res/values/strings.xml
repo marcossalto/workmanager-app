@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WorkManagerApp</string>
     <string name="start_sync">Start Sync</string>
+    <string name="backup">Backup</string>
 </resources>
